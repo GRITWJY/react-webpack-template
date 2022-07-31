@@ -7,7 +7,8 @@ const TerserWebpackPlugin = require("terser-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-
+const os = require("os");
+const threads = os.cpus().length; // cpu核数
 // 获取cross-env定义的环境变量
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -111,6 +112,7 @@ module.exports = {
       context: path.resolve(__dirname, "../src"),
       exclude: "node_modules",
       cache: true,
+      threads, // 开启多进程和设置进程数量
       cacheLocation: path.resolve(
         __dirname,
         "../node_modules/.cache/.eslintcache"
